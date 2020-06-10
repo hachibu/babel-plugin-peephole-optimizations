@@ -1,6 +1,6 @@
-import _ from 'lodash';
+export default babel => {
+  let { types } = babel;
 
-export default ({ types: t }) => {
   return {
     visitor: {
       BinaryExpression(path) {
@@ -11,13 +11,13 @@ export default ({ types: t }) => {
           right.type === 'StringLiteral' &&
           operator === '+'
         ) {
-          path.replaceWith(t.stringLiteral(left.value + right.value));
+          path.replaceWith(types.stringLiteral(left.value + right.value));
         } else if (
           left.type === 'NumericLiteral' &&
           right.type === 'NumericLiteral' &&
           operator === '+'
         ) {
-          path.replaceWith(t.numericLiteral(left.value + right.value));
+          path.replaceWith(types.numericLiteral(left.value + right.value));
         }
       }
     }

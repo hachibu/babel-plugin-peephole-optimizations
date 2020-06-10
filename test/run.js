@@ -1,16 +1,14 @@
-import _          from 'lodash';
 import assert     from 'assert';
 import * as babel from '@babel/core';
 import * as fs    from 'fs';
 import plugin     from '../lib';
 
-let testPaths = _(fs.readdirSync('test')).
-  map(name => _.join(['test', name], '/')).
-  filter(path => fs.lstatSync(path).isDirectory()).
-  value();
+let testPaths = fs.readdirSync('test').
+  map(name => `test/${name}`).
+  filter(path => fs.lstatSync(path).isDirectory());
 
 describe('plugin', () => {
-  _.each(testPaths, testPath => {
+  testPaths.forEach(testPath => {
     let inputPath = `${testPath}/input.js`;
     let outputPath = `${testPath}/output.js`;
 
@@ -20,7 +18,7 @@ describe('plugin', () => {
 
     it(testPath, () => {
       let input = babel.transformFileSync(inputPath, { plugins: [plugin] });
-      let output = _.trim(fs.readFileSync(outputPath, 'utf-8'));
+      let output = fs.readFileSync(outputPath, 'utf-8').trim();
 
       assert.equal(input.code, output);
     });
