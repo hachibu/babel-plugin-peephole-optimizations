@@ -13,20 +13,17 @@ describe('plugin', () => {
     let inputPath = `${testPath}/input.js`;
     let outputPath = `${testPath}/output.js`;
 
-    if (!fs.existsSync(inputPath) || !fs.existsSync(outputPath)) {
-      this.skip();
-    }
-
     it(testPath, () => {
-      let input = babel.transformFileSync(
-        inputPath,
-        {
-          plugins: [
-            constantFolding,
-            strengthReduction
-          ]
-        }
-      );
+      let plugins = [];
+
+      if (inputPath.includes('constant-folding')) {
+        plugins.push(constantFolding);
+      }
+      else if (inputPath.includes('strength-reduction')) {
+        plugins.push(strengthReduction);
+      }
+
+      let input = babel.transformFileSync(inputPath, { plugins });
       let output = fs.readFileSync(outputPath, 'utf-8').trim();
 
       assert.equal(input.code, output);
