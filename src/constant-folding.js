@@ -18,10 +18,12 @@ export default babel => {
         left.isStringLiteral() && right.isStringLiteral() ||
         left.isNumericLiteral() && right.isNumericLiteral()
       ) {
-        let typeCtor = babel.types[left.node.type];
-        path.replaceWith(
-          typeCtor(left.node.value + right.node.value)
-        );
+        if (path.node.operator === '+') {
+          let typeCtor = babel.types[left.node.type];
+          path.replaceWith(
+            typeCtor(left.node.value + right.node.value)
+          );
+        }
       }
     }
   };
@@ -31,5 +33,8 @@ export default babel => {
       ? getLeaf(path.get(key), key)
       : path;
 
-  return { visitor };
+  return {
+    name: 'constant-folding',
+    visitor
+  };
 };

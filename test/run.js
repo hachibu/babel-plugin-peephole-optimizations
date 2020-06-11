@@ -1,7 +1,8 @@
-import assert     from 'assert';
-import * as babel from '@babel/core';
-import * as fs    from 'fs';
-import plugin     from '../lib';
+import assert            from 'assert';
+import * as babel        from '@babel/core';
+import * as fs           from 'fs';
+import constantFolding   from '../lib/constant-folding';
+import strengthReduction from '../lib/strength-reduction';
 
 let testPaths = fs.readdirSync('test').
   map(name => `test/${name}`).
@@ -17,7 +18,15 @@ describe('plugin', () => {
     }
 
     it(testPath, () => {
-      let input = babel.transformFileSync(inputPath, { plugins: [plugin] });
+      let input = babel.transformFileSync(
+        inputPath,
+        {
+          plugins: [
+            constantFolding,
+            strengthReduction
+          ]
+        }
+      );
       let output = fs.readFileSync(outputPath, 'utf-8').trim();
 
       assert.equal(input.code, output);
