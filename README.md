@@ -8,6 +8,6 @@
     - [x] String addition
     - [x] Number addition
 
-  - [ ] Strength Reduction
+  - [x] Strength Reduction
     - [x] Multiplication into addition
-    - [ ] Exponentiation into multiplication
+    - [x] Exponentiation into multiplication

@@ -5,16 +5,21 @@ export default babel => {
       let right = path.get('right');
 
       if (left.isNumericLiteral() && right.isNumericLiteral()) {
-        if (path.node.operator === '*') {
-          let template = `${left.node.value}`;
+        let operators = {
+          '**': '*',
+          '*': '+'
+        };
+        let weakerOperator = operators[path.node.operator];
+
+        if (weakerOperator) {
+          let code = `${left.node.value}`;
 
           for (let i = 0; i < right.node.value - 1; i++) {
-            template += ` + ${left.node.value}`;
+            code += `${weakerOperator} ${left.node.value}`;
           }
 
-          let ast = babel.template.expression(template)();
-
-          path.replaceWith(ast);
+          path.replaceWith(babel.template.expression(code)());
+          path.skip();
         }
       }
     }

@@ -4,7 +4,7 @@ import * as fs           from 'fs';
 import constantFolding   from '../lib/constant-folding';
 import strengthReduction from '../lib/strength-reduction';
 
-describe('plugin', () => {
+describe('babel-plugin-peephole-optimizations', () => {
   let testPaths = fs.
     readdirSync('test').
     map(name => `test/${name}`).
