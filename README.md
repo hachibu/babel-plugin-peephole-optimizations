@@ -11,3 +11,6 @@
   - [x] Strength Reduction
     - [x] Multiplication into addition
     - [x] Exponentiation into multiplication
+    - [ ] Power of 2 multiplication and division into shifts
+
+  - [ ] Constant Propagation
