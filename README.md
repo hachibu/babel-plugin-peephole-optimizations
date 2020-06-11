@@ -4,9 +4,5 @@
 
 ## Todo
 
-  - [ ] Constant Folding
+  - [x] Constant Folding
   - [ ] Strength Reduction
-
-## Notes
-
-  - https://github.com/babel/minify/blob/master/packages/babel-plugin-minify-constant-folding/src/index.js
