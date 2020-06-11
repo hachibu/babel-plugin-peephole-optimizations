@@ -3,20 +3,21 @@ export default babel => {
 
   let visitor = {
     BinaryExpression(path) {
-      let { node: { left, operator, right } } = path;
+      if (!path.isBinaryExpression({ operator: '+' })) {
+        return;
+      }
 
-      if (
-        left.type === 'StringLiteral' &&
-        right.type === 'StringLiteral' &&
-        operator === '+'
-      ) {
-        path.replaceWith(types.stringLiteral(left.value + right.value));
-      } else if (
-        left.type === 'NumericLiteral' &&
-        right.type === 'NumericLiteral' &&
-        operator === '+'
-      ) {
-        path.replaceWith(types.numericLiteral(left.value + right.value));
+      let left = path.get('left');
+      let right = path.get('right');
+
+      if (left.isBinaryExpression()) {
+        left.traverse(visitor);
+      }
+      else if (left.isStringLiteral() && right.isStringLiteral()) {
+        path.replaceWith(types.stringLiteral(left.node.value + right.node.value));
+      }
+      else if (left.isNumericLiteral() && right.isNumericLiteral()) {
+        path.replaceWith(types.numericLiteral(left.node.value + right.node.value));
       }
     }
   };
