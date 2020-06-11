@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-peephole-optimizations",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "7.10.1",
@@ -9,13 +9,15 @@
     "@babel/parser": "7.10.2",
     "@babel/preset-env": "7.10.2",
     "@babel/register": "7.10.1",
-    "mocha": "7.2.0"
+    "mocha": "8.0.1"
   },
   "scripts": {
     "build": "babel src -d lib",
     "test": "yarn build && mocha --require @babel/register"
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
