@@ -1,3 +1,3 @@
 "use strict";
 
-var x = 2 * 2 * 2;
+var x = 2 * (2 * 2);
