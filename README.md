@@ -8,9 +8,14 @@
     - [x] String addition
     - [x] Number addition
 
+  - [x] Constant Propagation
+    - [x] Replace identifiers with literals
+
   - [x] Strength Reduction
     - [x] Multiplication into addition
     - [x] Exponentiation into multiplication
     - [x] Power of 2 multiplication and division into shifts
 
-  - [ ] Constant Propagation
+## Notes
+
+  - https://en.wikipedia.org/wiki/Optimizing_compiler#List_of_compiler_optimizations

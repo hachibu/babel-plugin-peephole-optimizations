@@ -2,14 +2,39 @@ export default babel => {
   const visitor = {
     BlockStatement(path) {
       let varDecs = path.node.body.filter(node =>
-        !!node.declarations?.find(dec => dec.init.type.endsWith('Literal')));
+        !!node.declarations?.find(d => d.init.type.endsWith('Literal')));
 
-      // 1. Find var declarations with a literal init.
-      // 2. Traverse sub-expressions and expand references to var declarations.
+      let bindings = new Map();
 
-      console.log(varDecs);
+      varDecs.forEach(varDec =>
+        varDec.declarations.forEach(d => bindings.set(d.id.name, d.init)));
 
-      path.skip();
+      path.traverse({
+        BinaryExpression(path) {
+          let left = path.get('left');
+          let right = path.get('right');
+          let id;
+
+          if (left.isIdentifier()) {
+            id = left;
+          }
+          else if (right.isIdentifier()) {
+            id = right;
+          }
+
+          if (!id) {
+            return;
+          }
+
+          let lit = bindings.get(id.node.name);
+
+          if (!lit) {
+            return;
+          }
+
+          id.replaceWith(lit);
+        }
+      });
     }
   };
 

@@ -20,7 +20,6 @@ describe('babel-plugin-peephole-optimizations', () => {
       }
       else if (testPath.includes('constant-propagation')) {
         plugins.push(constantPropagation);
-        return;
       }
       else if (testPath.includes('strength-reduction')) {
         plugins.push(strengthReduction);
